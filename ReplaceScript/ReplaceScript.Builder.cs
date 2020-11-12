@@ -6,6 +6,8 @@ namespace ReplaceScript
     public partial class ReplaceScript
     {
         private bool isBuilt;
+        private Parser parser;
+
         public ReplaceScript(){
             isBuilt = false;
         }
@@ -17,14 +19,19 @@ namespace ReplaceScript
         
         //init parser to parse from file
         public ReplaceScript FromFile(string path){
+            FileInputProvider provider = new FileInputProvider(path);
+            Tokenizer tokenizer = new Tokenizer(provider);
+            parser = new Parser(tokenizer);
 
-            return null;
+            return this;
         }
 
         //init parser to parse from given string
         public ReplaceScript FromString(string str){
-            
-            return null;
+            var provider = new StringInputProvider(str);
+            Tokenizer tokenizer = new Tokenizer(provider);
+            parser = new Parser(tokenizer);
+            return this;
         }
 
         //execute tokenizing and parsing

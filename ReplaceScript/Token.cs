@@ -6,5 +6,6 @@ namespace ReplaceScript
     {
         Replace,
         With,
+        Argument
     }
 }
