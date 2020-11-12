@@ -14,19 +14,23 @@ namespace ReplaceScript
         {
             return new ReplaceScript();
         }
-
+        
+        //init parser to parse from file
         public ReplaceScript FromFile(string path){
-            //init parser to parse from file
+
             return null;
         }
 
+        //init parser to parse from given string
         public ReplaceScript FromString(string str){
-            //init parser to parse from given string
+            
             return null;
         }
 
+        //execute tokenizing and parsing
+        //this builds the ReplaceScript rule once.  If the files changes the rule needs to be rebuilt
         public ReplaceScript Build(){
-            //execute tokenizing and
+            
 
 
             isBuilt = true;
