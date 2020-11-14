@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ReplaceScript
 {
@@ -8,24 +9,22 @@ namespace ReplaceScript
     {
         //selection starts out as the string provided
         //can be changed by actions
-        string currentSelection;
         private Tokenizer tokenizer;
 
-        public Parser(Tokenizer tokenizer, string selection)
+        public Parser(Tokenizer tokenizer)
         {
             this.tokenizer = tokenizer;
-            currentSelection = selection;
         }
 
-        public INode Parse()
+        public ActionNode Parse()
         {
             tokenizer.MoveNextLine();
             tokenizer.NextToken();
-            INode node = ParseAction();
+            ActionNode node = ParseAction();
             return node;
         }
 
-        private INode ParseAction()
+        private ActionNode ParseAction()
         {
             INode selection = ParseSelection();
 
@@ -42,7 +41,7 @@ namespace ReplaceScript
             switch (actionToken)
             {
                 case Token.Replace:
-                    return new ReplaceNode(currentSelection, supplier);
+                    return new ReplaceNode(supplier);
                 default:
                     throw new Exception("No action defined in line");
             }
@@ -52,12 +51,14 @@ namespace ReplaceScript
         {
             if (tokenizer.NextToken() != Token.Argument)
             {
-                throw new InvalidOperationException("TODO: Implement proper exception!  Error: Expected Argument");
+                throw new Exception("TODO: Implement proper exception!  Error: Expected Argument");
             }
 
             ActionArgumentsSupplier argumentsSupplier = new ActionArgumentsSupplier();
             argumentsSupplier.AddArgument(new StringArgumentNode(tokenizer.CurrentArgument));
             argumentsSupplier.AddArguments(ParseSuppliers());
+
+            Console.WriteLine(argumentsSupplier.arguments.ToString());
             return argumentsSupplier;
 
         }
@@ -76,7 +77,7 @@ namespace ReplaceScript
         //return default selection as a result 
         private INode ParseSelection()
         {
-            return new StringSelectionNode(currentSelection);
+            return new DefaultSelectionNode();
         }
 
     }

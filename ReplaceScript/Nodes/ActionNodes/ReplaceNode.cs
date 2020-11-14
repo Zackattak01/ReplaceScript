@@ -7,10 +7,21 @@ namespace ReplaceScript
         INode oldStr;
         INode newStr;
 
-        public ReplaceNode(string selection, ActionArgumentsSupplier argSupplier) : base(selection, argSupplier)
+        public ReplaceNode(ActionArgumentsSupplier argSupplier) : base(argSupplier)
         {
             oldStr = argSupplier.NextArgument();
+
+            if (oldStr == null)
+            {
+                throw new ArgumentException("The \"Replace\" action requires two arguements", "oldStr");
+            }
+
             newStr = argSupplier.NextArgument();
+
+            if (newStr == null)
+            {
+                throw new ArgumentException("The \"Replace\" action requires two arguements", "newStr");
+            }
         }
 
         public override string Evaluate()

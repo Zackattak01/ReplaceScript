@@ -5,7 +5,7 @@ namespace ReplaceScript
 {
     internal class ActionArgumentsSupplier
     {
-        List<INode> arguments;
+        public List<INode> arguments;
 
         int index;
 
@@ -19,8 +19,9 @@ namespace ReplaceScript
         {
             index++;
 
-            if (index >= arguments.Count - 1)
+            if (index >= arguments.Count)
             {
+                System.Console.WriteLine("IF IS WRONG");
                 return null;
             }
 

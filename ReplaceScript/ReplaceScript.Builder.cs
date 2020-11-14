@@ -3,23 +3,25 @@ using System;
 namespace ReplaceScript
 {
     //the builder portion of this class
-    public partial class ReplaceScript
+    public partial class Script
     {
         private bool isBuilt;
         private Parser parser;
 
-        private ReplaceScript()
+        private ActionNode headNode;
+
+        private Script()
         {
             isBuilt = false;
         }
 
-        public static ReplaceScript Create()
+        public static Script Create()
         {
-            return new ReplaceScript();
+            return new Script();
         }
 
         //init parser to parse from file
-        public ReplaceScript FromFile(string path)
+        public Script FromFile(string path)
         {
             FileInputProvider provider = new FileInputProvider(path);
             Tokenizer tokenizer = new Tokenizer(provider);
@@ -29,7 +31,7 @@ namespace ReplaceScript
         }
 
         //init parser to parse from given string
-        public ReplaceScript FromString(string str)
+        public Script FromString(string str)
         {
             var provider = new StringInputProvider(str);
             Tokenizer tokenizer = new Tokenizer(provider);
@@ -40,10 +42,9 @@ namespace ReplaceScript
 
         //execute tokenizing and parsing
         //this builds the ReplaceScript rule once.  If the file changes the rule needs to be rebuilt
-        public ReplaceScript Build()
+        public Script Build()
         {
-
-
+            headNode = parser.Parse();
 
             isBuilt = true;
             return this;

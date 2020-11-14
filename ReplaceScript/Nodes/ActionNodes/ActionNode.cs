@@ -2,17 +2,14 @@ using System;
 
 namespace ReplaceScript
 {
-    internal abstract class ActionNode : INode
+    internal abstract class ActionNode : StatefulNode
     {
-        protected string selection;
         protected ActionArgumentsSupplier argSupplier;
 
-        protected ActionNode(string selection, ActionArgumentsSupplier argSupplier)
+        protected ActionNode(ActionArgumentsSupplier argSupplier)
         {
-            this.selection = selection;
             this.argSupplier = argSupplier;
         }
 
-        public abstract string Evaluate();
     }
 }
