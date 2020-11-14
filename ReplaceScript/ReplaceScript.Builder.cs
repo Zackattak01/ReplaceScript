@@ -8,7 +8,8 @@ namespace ReplaceScript
         private bool isBuilt;
         private Parser parser;
 
-        public ReplaceScript(){
+        private ReplaceScript()
+        {
             isBuilt = false;
         }
 
@@ -16,9 +17,10 @@ namespace ReplaceScript
         {
             return new ReplaceScript();
         }
-        
+
         //init parser to parse from file
-        public ReplaceScript FromFile(string path){
+        public ReplaceScript FromFile(string path)
+        {
             FileInputProvider provider = new FileInputProvider(path);
             Tokenizer tokenizer = new Tokenizer(provider);
             parser = new Parser(tokenizer);
@@ -27,21 +29,24 @@ namespace ReplaceScript
         }
 
         //init parser to parse from given string
-        public ReplaceScript FromString(string str){
+        public ReplaceScript FromString(string str)
+        {
             var provider = new StringInputProvider(str);
             Tokenizer tokenizer = new Tokenizer(provider);
             parser = new Parser(tokenizer);
             return this;
         }
 
+
         //execute tokenizing and parsing
-        //this builds the ReplaceScript rule once.  If the files changes the rule needs to be rebuilt
-        public ReplaceScript Build(){
-            
+        //this builds the ReplaceScript rule once.  If the file changes the rule needs to be rebuilt
+        public ReplaceScript Build()
+        {
+
 
 
             isBuilt = true;
-            return null;
+            return this;
         }
     }
 }

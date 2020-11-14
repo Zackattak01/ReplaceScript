@@ -4,6 +4,7 @@ namespace ReplaceScript
 {
     public interface IUnparsedInputProvider
     {
-        public string NextLine();
+        string NextLine();
+
     }
 }

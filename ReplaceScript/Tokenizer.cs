@@ -4,44 +4,51 @@ namespace ReplaceScript
 {
     internal class Tokenizer
     {
-        public Token CurrentToken {get; private set;}
+        public Token CurrentToken { get; private set; }
+        public string CurrentArgument { get; private set; }
 
         private IUnparsedInputProvider inputProvider;
+
 
         private string[] unparsedTokens;
 
         private int unparsedTokenIndex;
 
-        public Tokenizer(IUnparsedInputProvider provider){
+        public Tokenizer(IUnparsedInputProvider provider)
+        {
             inputProvider = provider;
         }
 
-        private string NextUnparsedToken(){
+        private string NextUnparsedToken()
+        {
             unparsedTokenIndex++;
             return unparsedTokens[unparsedTokenIndex];
         }
 
-        public void MoveNextLine(){
+        public void MoveNextLine()
+        {
             unparsedTokens = inputProvider.NextLine().Split(' ');
             unparsedTokenIndex = -1;
         }
 
-        public Token NextToken(){
+        public Token NextToken()
+        {
             string currentUnparsedToken = NextUnparsedToken().ToLower();
 
             switch (currentUnparsedToken)
             {
                 case "replace":
-                CurrentToken = Token.Replace;
-                return Token.Replace;
+                    CurrentToken = Token.Replace;
+                    return Token.Replace;
 
                 case "with":
-                CurrentToken = Token.With;
-                return Token.With;
-                
-                
+                    CurrentToken = Token.With;
+                    return Token.With;
+
+
             }
 
+            CurrentArgument = currentUnparsedToken;
             return Token.Argument;
         }
 
